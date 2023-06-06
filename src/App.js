@@ -4,18 +4,23 @@ import axios from 'axios'
 function App() {
   const [data, setData] = useState({})
   const [location, setLocation] = useState('')
+  const [error, setError] = useState('');
 
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=7d50c09b8b81443c5ee66bb28a0e674e`
-  
-  const searchLocation = (event) => {
-    if (event.key === 'Enter') { 
-      axios.get(url).then((response) => {
-        setData(response.data)
-        console.log(response.data)
-      })
-      setLocation('')
+
+  const searchLocation = async (event) => {
+    if (event.key === 'Enter') {
+      try {
+        const response = await axios.get(url);
+        setData(response.data);
+        setError('');
+        console.log(response.data);
+      } catch (error) {
+        setError('Location not found. Please enter a valid location.');
+      }
+      setLocation('');
     }
-  }
+  };
 
   return (
     <div className="app">
@@ -28,6 +33,7 @@ function App() {
           type='text'  
         />
       </div>
+      {error && <p className='error'>{error}</p>}
       <div className='container'>
         <div className='top'>
           <div className='location'>
