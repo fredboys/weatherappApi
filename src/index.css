@@ -81,6 +81,11 @@ h1 {
   text-align: center;
 }
 
+.app .title {
+  text-align: center;
+  font-size: 3rem;
+}
+
 /* .app .description {
   position: relative;
   right: -90%;
